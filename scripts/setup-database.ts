@@ -18,15 +18,16 @@ for (const [sortOrder, project] of projects.entries()) {
   await sql`
     INSERT INTO projects (
       id, slug, title, subtitle, short_description, description, year, status,
-      categories, disciplines, technologies, thumbnail, cover, gallery,
-      featured, published, accent, project_index, sort_order, links, sections
+      publication_status, categories, disciplines, technologies, thumbnail, cover, gallery,
+      featured, published, accent, project_index, sort_order, links, blocks, sections
     ) VALUES (
       ${project.id}, ${project.slug}, ${project.title}, ${project.subtitle}, ${project.shortDescription},
-      ${project.description}, ${project.year ?? null}, ${project.status ?? null},
+      ${project.description}, ${project.year ?? null}, ${project.status ?? null}, 'published',
       ${JSON.stringify(project.categories)}, ${JSON.stringify(project.disciplines)},
       ${JSON.stringify(project.technologies)}, ${project.thumbnail ?? null}, ${project.cover ?? null},
       ${JSON.stringify(project.gallery)}, ${project.featured}, true, ${project.accent},
-      ${project.index}, ${sortOrder}, ${JSON.stringify(project.links)}, ${JSON.stringify(project.sections)}
+      ${project.index}, ${sortOrder}, ${JSON.stringify(project.links)}, ${JSON.stringify(project.blocks ?? [])},
+      ${JSON.stringify(project.sections)}
     )
     ON CONFLICT (id) DO NOTHING
   `;

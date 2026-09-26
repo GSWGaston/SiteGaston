@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ProjectVisual } from "@/components/project-visual";
 import type { Project, ProjectSection } from "@/types/project";
 
@@ -28,4 +29,3 @@ function Section({ section, project }: { section: ProjectSection; project: Proje
 export function CaseContent({ project }: { project: Project }) {
   return <div className="case-content container">{project.sections.map((section, index) => <Section key={`${section.type}-${index}`} project={project} section={section} />)}</div>;
 }
-import Image from "next/image";

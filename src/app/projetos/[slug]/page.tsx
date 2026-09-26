@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "@/components/icons";
 import { CaseContent } from "@/components/case-content";
+import { ProjectBlocks } from "@/components/project-blocks/project-block-renderer";
 import { ProjectVisual } from "@/components/project-visual";
 import { projects as seedProjects } from "@/data/projects";
 import { getProjectBySlug, getPublicProjects } from "@/lib/projects";
@@ -58,7 +59,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div><dt>Ano</dt><dd>{project.year ?? "Não informado"}</dd></div>
         </dl>
       </header>
-      <CaseContent project={project} />
+      {project.blocks?.length ? <ProjectBlocks blocks={project.blocks} /> : <CaseContent project={project} />}
       <nav className="next-project container" aria-label="Navegação entre projetos">
         <p>Próximo projeto</p>
         <Link href={`/projetos/${nextProject.slug}`}><span>{nextProject.title}</span><ArrowRight size={36} /></Link>

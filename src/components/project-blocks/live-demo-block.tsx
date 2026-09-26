@@ -1,0 +1,7 @@
+import Image from "next/image";
+import { ArrowUpRight } from "@/components/icons";
+import type { LiveDemoProjectBlock } from "@/types/project";
+export function LiveDemoBlock({ block }: { block: LiveDemoProjectBlock }) {
+  let domain = block.url; try { domain = new URL(block.url).hostname; } catch {}
+  return <section className="project-block project-block-live-demo"><div className="project-live-heading"><div><p className="eyebrow">Projeto ao vivo</p><h2>{block.title}</h2>{block.description ? <p>{block.description}</p> : null}</div>{block.openExternalEnabled ? <a className="button button-secondary" href={block.url} target="_blank" rel="noreferrer">Abrir projeto <ArrowUpRight /></a> : null}</div>{block.embedEnabled ? <div className="project-live-embed"><iframe src={block.url} title={`Demonstração de ${block.title}`} loading="lazy" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" /></div> : null}<div className="project-live-fallback">{block.previewImage ? <div className="project-live-preview"><Image src={block.previewImage} alt={`Prévia de ${block.title}`} fill sizes="100vw" /></div> : null}<div><span>{domain}</span><p>Se a visualização incorporada não carregar, abra o projeto em uma nova aba.</p>{block.openExternalEnabled ? <a href={block.url} target="_blank" rel="noreferrer">Abrir projeto <ArrowUpRight /></a> : null}</div></div></section>;
+}

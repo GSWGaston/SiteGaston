@@ -17,6 +17,7 @@ export async function POST(request: Request) {
       request,
       onBeforeGenerateToken: async (pathname) => ({
         allowedContentTypes: ["image/jpeg", "image/png", "image/webp", "image/avif", "image/gif"],
+        maximumSizeInBytes: 8 * 1024 * 1024,
         addRandomSuffix: true,
         tokenPayload: JSON.stringify({ admin: admin.email, pathname }),
       }),
