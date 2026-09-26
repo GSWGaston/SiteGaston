@@ -31,6 +31,10 @@ type ProjectRow = {
 
 export type ProjectInput = Omit<Project, "id"> & { id?: string };
 
+function projectRows(rows: Awaited<ReturnType<ReturnType<typeof getSql>>>): ProjectRow[] {
+  return rows as unknown as ProjectRow[];
+}
+
 function rowToProject(row: ProjectRow): Project {
   return {
     id: row.id,
@@ -62,7 +66,7 @@ export const getPublicProjects = cache(async (): Promise<Project[]> => {
 
   const sql = getSql();
   const rows = await sql`SELECT * FROM projects WHERE published = true ORDER BY sort_order ASC, created_at ASC`;
-  return (rows as ProjectRow[]).map(rowToProject);
+  return projectRows(rows).map(rowToProject);
 });
 
 export const getAllProjects = cache(async (): Promise<Project[]> => {
@@ -70,7 +74,7 @@ export const getAllProjects = cache(async (): Promise<Project[]> => {
 
   const sql = getSql();
   const rows = await sql`SELECT * FROM projects ORDER BY sort_order ASC, created_at ASC`;
-  return (rows as ProjectRow[]).map(rowToProject);
+  return projectRows(rows).map(rowToProject);
 });
 
 export const getProjectBySlug = cache(async (slug: string): Promise<Project | undefined> => {
@@ -78,7 +82,7 @@ export const getProjectBySlug = cache(async (slug: string): Promise<Project | un
 
   const sql = getSql();
   const rows = await sql`SELECT * FROM projects WHERE slug = ${slug} AND published = true LIMIT 1`;
-  const row = rows[0] as ProjectRow | undefined;
+  const row = projectRows(rows)[0];
   return row ? rowToProject(row) : undefined;
 });
 
@@ -87,7 +91,7 @@ export const getProjectById = cache(async (id: string): Promise<Project | undefi
 
   const sql = getSql();
   const rows = await sql`SELECT * FROM projects WHERE id = ${id} LIMIT 1`;
-  const row = rows[0] as ProjectRow | undefined;
+  const row = projectRows(rows)[0];
   return row ? rowToProject(row) : undefined;
 });
 
