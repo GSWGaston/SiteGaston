@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { BrandSignature } from "@/components/brand-logo";
 import { getAdminSession, isAuthConfigured } from "@/lib/auth";
 
 export const metadata: Metadata = { title: "Acesso administrativo", robots: { index: false, follow: false } };
@@ -23,7 +24,7 @@ export default async function AdminLoginPage({ searchParams }: { searchParams: P
   return (
     <div className="admin-login-page">
       <div className="admin-login-card">
-        <Link href="/" className="admin-login-logo"><span>MG</span> Matheus Gaston</Link>
+        <Link href="/" className="admin-login-logo" aria-label="Gaston Design — página inicial"><BrandSignature /></Link>
         <p className="admin-kicker">Área restrita</p>
         <h1>Gerencie seu portfólio.</h1>
         <p>Adicione projetos, organize cases e publique novas imagens usando sua conta Vercel.</p>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BrandSignature } from "@/components/brand-logo";
 import { siteConfig } from "@/data/site";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 
@@ -20,9 +21,8 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link className="brand" href="/" aria-label="Matheus Gaston — página inicial">
-          <span className="brand-mark">MG</span>
-          <span>Matheus Gaston</span>
+        <Link className="brand" href="/" aria-label="Gaston Design — página inicial">
+          <BrandSignature />
         </Link>
 
         <nav aria-label="Navegação principal" className="desktop-nav">

@@ -56,8 +56,10 @@ button { color: inherit; font: inherit; }
   backdrop-filter: blur(16px);
 }
 .header-inner { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; height: 100%; }
-.brand { display: inline-flex; align-items: center; gap: .8rem; font-size: .84rem; font-weight: 700; letter-spacing: -.02em; }
-.brand-mark { display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border-radius: 50%; background: var(--accent); color: var(--accent-text); font-size: .67rem; letter-spacing: -.04em; }
+.brand { display: inline-flex; align-items: center; }
+.brand-signature { display: inline-flex; height: 2.5rem; align-items: center; gap: .7rem; }
+.brand-symbol { width: 2.15rem; height: 2.35rem; flex: 0 0 auto; color: var(--accent); }
+.brand-wordmark { width: 4.85rem; height: auto; flex: 0 0 auto; color: var(--text); }
 .desktop-nav { display: none; align-items: center; gap: 2rem; }
 .nav-link { position: relative; padding-block: .6rem; color: var(--muted); font-size: .82rem; transition: color .2s; }
 .nav-link::after { position: absolute; right: 0; bottom: .25rem; left: 0; height: 1px; background: var(--accent); content: ""; transform: scaleX(0); transform-origin: right; transition: transform .3s var(--ease); }
@@ -146,7 +148,7 @@ button { color: inherit; font: inherit; }
 .placeholder-label { display: none; margin-right: 1rem; font-size: .6rem; font-weight: 400; letter-spacing: .08em; opacity: .6; text-transform: uppercase; }
 .site-footer { padding-block: 2rem; background: var(--bg); }
 .footer-inner { display: grid; gap: 1.2rem; color: var(--muted); font-size: .68rem; letter-spacing: .04em; }
-.footer-inner .brand { color: var(--text); font-size: .8rem; letter-spacing: 0; }
+.footer-inner .brand { color: var(--text); }
 
 .page-shell { padding-top: clamp(4rem, 9vw, 8rem); padding-bottom: clamp(7rem, 12vw, 12rem); }
 .page-header { max-width: 64rem; margin-bottom: clamp(4rem, 8vw, 7rem); }
@@ -229,7 +231,7 @@ button { color: inherit; font: inherit; }
 .admin-shell { min-height: 100svh; background: #f2f2ed; color: #111214; }
 .admin-header { position: sticky; z-index: 30; top: 0; display: flex; min-height: 4.5rem; align-items: center; justify-content: space-between; gap: 1rem; padding: .75rem clamp(1rem, 4vw, 3rem); border-bottom: 1px solid #d7d7d0; background: rgb(242 242 237 / .92); backdrop-filter: blur(14px); }
 .admin-brand { display: flex; align-items: center; gap: .75rem; font-size: .76rem; }
-.admin-brand > span, .admin-login-logo > span { display: grid; width: 2.25rem; height: 2.25rem; place-items: center; border-radius: 50%; background: #111214; color: var(--accent); font-size: .68rem; font-weight: 800; }
+.admin-brand .brand-symbol { width: 2.05rem; height: 2.25rem; color: #779300; }
 .admin-brand div { display: flex; flex-direction: column; line-height: 1.1; }
 .admin-brand strong { font-size: .66rem; color: #74766f; text-transform: uppercase; letter-spacing: .08em; }
 .admin-header nav { display: flex; align-items: center; gap: clamp(.6rem, 2vw, 1.5rem); color: #666862; font-size: .7rem; }
@@ -297,8 +299,7 @@ button { color: inherit; font: inherit; }
 .admin-success { padding: .8rem 1rem; border-radius: .5rem; background: #deefc4; color: #385700; font-size: .75rem; }
 .admin-login-page { min-height: 100svh; display: grid; place-items: center; padding: 1.25rem; background: #0b0c0e; }
 .admin-login-card { width: min(100%, 34rem); padding: clamp(1.5rem, 6vw, 3.5rem); border: 1px solid #292c30; border-radius: 1.2rem; background: #121417; color: #f2f1eb; }
-.admin-login-logo { display: flex; align-items: center; gap: .75rem; margin-bottom: 4rem; font-size: .78rem; font-weight: 700; }
-.admin-login-logo > span { background: var(--accent); color: #111214; }
+.admin-login-logo { display: inline-flex; align-items: center; margin-bottom: 4rem; }
 .admin-login-card h1 { margin: .8rem 0 1rem; font-size: clamp(2.6rem, 8vw, 4.5rem); letter-spacing: -.065em; line-height: .95; }
 .admin-login-card > p:not(.admin-kicker, .admin-error) { color: #9ea09b; }
 .admin-vercel-button { width: 100%; margin-top: 2rem; background: #fff; color: #111214; }
