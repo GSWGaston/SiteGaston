@@ -5,11 +5,11 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: { default: "Matheus Gaston — Design, tecnologia e produto", template: "%s — Matheus Gaston" },
+  title: { default: "Gaston Design", template: "%s — Gaston Design" },
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Matheus Gaston — Design, tecnologia e produto",
+    title: "Gaston Design — Design, tecnologia e produto",
     description: siteConfig.description,
     type: "website",
     locale: "pt_BR",

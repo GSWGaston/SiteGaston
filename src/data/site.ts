@@ -1,10 +1,10 @@
 export const siteConfig = {
-  name: "Matheus Gaston",
+  name: "Gaston Design",
   fullName: "Matheus Gaston da Silva",
   location: "Porto Alegre, RS — Brasil",
   role: "Designer multidisciplinar e profissional de tecnologia",
   description:
-    "Portfólio de Matheus Gaston: produtos digitais, interfaces, identidades visuais, desenvolvimento web e produção multimídia.",
+    "Portfólio Gaston Design: produtos digitais, interfaces, identidades visuais, desenvolvimento web e produção multimídia.",
   url: "https://placeholder.example",
   email: "contato@placeholder.com",
   navigation: [
