@@ -93,6 +93,7 @@ export async function createProject(input: ProjectInput) {
       ${input.cover ?? null}, ${JSON.stringify(input.gallery)}, ${input.featured}, ${publicationStatus === "published"},
       ${input.accent}, ${input.index}, ${input.sortOrder ?? 0}, ${JSON.stringify(input.links)},
       ${JSON.stringify(input.blocks ?? [])}, ${JSON.stringify(input.sections ?? [])})`;
+  if (input.featured) await sql`UPDATE projects SET featured = false WHERE id <> ${id} AND featured = true`;
   return id;
 }
 
@@ -108,6 +109,7 @@ export async function updateProject(id: string, input: ProjectInput) {
     project_index = ${input.index}, sort_order = ${input.sortOrder ?? 0}, links = ${JSON.stringify(input.links)},
     blocks = ${JSON.stringify(input.blocks ?? [])}, sections = ${JSON.stringify(input.sections ?? [])}, updated_at = NOW()
     WHERE id = ${id}`;
+  if (input.featured) await sql`UPDATE projects SET featured = false WHERE id <> ${id} AND featured = true`;
 }
 
 export async function updateProjectStatus(id: string, publicationStatus: ProjectPublicationStatus) {

@@ -8,7 +8,9 @@ import { getPublicProjects } from "@/lib/projects";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const featuredProjects = (await getPublicProjects()).filter((project) => project.featured);
+  const projects = await getPublicProjects();
+  const featuredProject = projects.find((project) => project.featured) ?? projects[0];
+  const otherProjects = projects.filter((project) => project.id !== featuredProject?.id);
   return (
     <>
       <section className="hero container">
@@ -34,10 +36,10 @@ export default async function Home() {
 
       <section className="section container" id="projetos-destaque">
         <SectionHeader eyebrow="Projetos / 01" title="Trabalhos selecionados" description="Uma seleção de produtos, sistemas, identidades e narrativas que conectam pensamento visual e execução técnica." />
-        <div className="featured-grid">
-          {featuredProjects.map((project) => <ProjectCard key={project.id} project={project} />)}
-        </div>
-        <Link href="/projetos" className="text-link">Explorar todos os projetos <ArrowRight /></Link>
+        {featuredProject ? <div className="featured-grid"><ProjectCard project={featuredProject} /></div> : null}
+        {otherProjects.length ? <div className="projects-grid home-projects-grid">
+          {otherProjects.map((project) => <ProjectCard key={project.id} project={project} />)}
+        </div> : null}
       </section>
 
       <section className="section expertise-section">
