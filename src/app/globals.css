@@ -383,7 +383,7 @@ button { color: inherit; font: inherit; }
 .project-block-subtitle { margin: -.5rem 0 .5rem; font-size: 1.05rem; }
 .project-block-media { position: relative; min-height: clamp(20rem, 65vw, 48rem); overflow: hidden; border-radius: var(--radius); background: var(--surface-2); }
 .project-block-media img { object-fit: cover; }
-.project-block-image.is-normal { max-width: 56rem; margin-inline: auto; }
+.project-block-image.is-normal { width: 100%; max-width: 56rem; margin-inline: auto; }
 .project-block-image.is-wide { width: 100%; }
 .project-block-image.is-full { width: 100vw; margin-left: calc(50% - 50vw); }
 .project-block-image.is-full .project-block-media { border-radius: 0; }
