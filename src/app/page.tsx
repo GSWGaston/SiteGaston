@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const projects = await getPublicProjects();
-  const featuredProject = projects.find((project) => project.featured) ?? projects[0];
+  const featuredProject = projects[0];
   const otherProjects = projects.filter((project) => project.id !== featuredProject?.id);
   return (
     <>
