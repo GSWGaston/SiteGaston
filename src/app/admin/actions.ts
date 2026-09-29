@@ -7,8 +7,11 @@ import { requireAdmin } from "@/lib/auth";
 import {
   createProject,
   deleteProject,
+  getAllProjects,
   getProjectById,
   isSlugAvailable,
+  normalizeProjectOrder,
+  reorderProjects,
   updateProject,
   updateProjectStatus,
   type ProjectInput,
@@ -64,7 +67,7 @@ function parseJson<T>(value: FormDataEntryValue | null, message: string): T {
   try { return JSON.parse(String(value ?? "[]")) as T; } catch { throw new Error(message); }
 }
 
-function readProjectForm(formData: FormData): ProjectInput {
+function readProjectForm(formData: FormData, ordering: Pick<ProjectInput, "featured" | "sortOrder">): ProjectInput {
   const blocks = parseJson<ProjectBlock[]>(formData.get("blocks"), "Os blocos estão em um formato inválido.");
   const sections = parseJson<ProjectSection[]>(formData.get("sections"), "O conteúdo legado está em um formato inválido.");
   const result = projectSchema.safeParse({
@@ -74,8 +77,8 @@ function readProjectForm(formData: FormData): ProjectInput {
     publicationStatus: formData.get("publicationStatus"), categories: formData.getAll("categories") as ProjectCategory[],
     disciplines: lines(formData.get("disciplines")), technologies: lines(formData.get("technologies")),
     thumbnail: String(formData.get("thumbnail") ?? "") || undefined, cover: String(formData.get("cover") ?? "") || undefined,
-    gallery: lines(formData.get("gallery")), featured: formData.get("featured") === "on", accent: formData.get("accent"),
-    index: formData.get("index"), sortOrder: Number(formData.get("sortOrder") ?? 0), links: parseLinks(formData.get("links")), blocks, sections,
+    gallery: lines(formData.get("gallery")), featured: ordering.featured, accent: formData.get("accent"),
+    index: formData.get("index"), sortOrder: ordering.sortOrder, links: parseLinks(formData.get("links")), blocks, sections,
   });
   if (!result.success) throw new Error(result.error.issues[0]?.message ?? "Revise os dados do projeto.");
   return result.data;
@@ -94,7 +97,9 @@ function actionError(error: unknown, fallback: string): ProjectActionState {
 export async function createProjectAction(_state: ProjectActionState, formData: FormData): Promise<ProjectActionState> {
   await requireAdmin();
   try {
-    const input = readProjectForm(formData);
+    const projects = await getAllProjects();
+    const nextSortOrder = projects.reduce((highest, project) => Math.max(highest, project.sortOrder ?? 0), -1) + 1;
+    const input = readProjectForm(formData, { featured: projects.length === 0, sortOrder: nextSortOrder });
     if (!(await isSlugAvailable(input.slug))) return { error: "Este slug já está em uso." };
     const id = await createProject(input);
     refreshProjectPages(input.slug);
@@ -107,7 +112,7 @@ export async function updateProjectAction(id: string, _state: ProjectActionState
   try {
     const previous = await getProjectById(id);
     if (!previous) return { error: "Projeto não encontrado." };
-    const input = readProjectForm(formData);
+    const input = readProjectForm(formData, { featured: previous.featured, sortOrder: previous.sortOrder ?? 0 });
     if (!(await isSlugAvailable(input.slug, id))) return { error: "Este slug já está em uso." };
     await updateProject(id, input);
     refreshProjectPages(previous.slug, input.slug);
@@ -130,7 +135,9 @@ export async function duplicateProjectAction(id: string) {
   let suffix = 1;
   let slug = `${project.slug}-copia`;
   while (!(await isSlugAvailable(slug))) { suffix += 1; slug = `${project.slug}-copia-${suffix}`; }
-  const copyId = await createProject({ ...project, id: undefined, slug, title: `${project.title} (cópia)`, publicationStatus: "draft", published: false, featured: false });
+  const projects = await getAllProjects();
+  const nextSortOrder = projects.reduce((highest, item) => Math.max(highest, item.sortOrder ?? 0), -1) + 1;
+  const copyId = await createProject({ ...project, id: undefined, slug, title: `${project.title} (cópia)`, publicationStatus: "draft", published: false, featured: false, sortOrder: nextSortOrder });
   refreshProjectPages(slug);
   redirect(`/admin/${copyId}/editar?duplicated=1`);
 }
@@ -140,6 +147,29 @@ export async function deleteProjectAction(id: string) {
   const project = await getProjectById(id);
   if (!project) return;
   await deleteProject(id);
+  await normalizeProjectOrder();
   refreshProjectPages(project.slug);
   redirect("/admin?deleted=1");
+}
+
+const projectOrderSchema = z.array(z.string().trim().min(1)).min(1).max(500);
+
+export async function reorderProjectsAction(projectIds: string[]): Promise<ProjectActionState> {
+  await requireAdmin();
+  try {
+    const result = projectOrderSchema.safeParse(projectIds);
+    if (!result.success || new Set(result.data).size !== result.data.length) return { error: "A ordem enviada é inválida." };
+
+    const projects = await getAllProjects();
+    const existingIds = new Set(projects.map((project) => project.id));
+    if (result.data.length !== existingIds.size || result.data.some((id) => !existingIds.has(id))) {
+      return { error: "A lista de projetos mudou. Atualize a página e tente novamente." };
+    }
+
+    await reorderProjects(result.data);
+    refreshProjectPages(...projects.map((project) => project.slug));
+    return {};
+  } catch (error) {
+    return actionError(error, "Não foi possível salvar a nova ordem.");
+  }
 }

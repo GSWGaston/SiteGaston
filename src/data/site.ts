@@ -6,7 +6,7 @@ export const siteConfig = {
   description:
     "Portfólio Gaston Design: produtos digitais, interfaces, identidades visuais, desenvolvimento web e produção multimídia.",
   url: "https://placeholder.example",
-  email: "contato@placeholder.com",
+  email: "matheus.gaston.silva@gmail.com",
   navigation: [
     { label: "Início", href: "/" },
     { label: "Projetos", href: "/projetos" },
@@ -14,12 +14,11 @@ export const siteConfig = {
     { label: "Contato", href: "/#contato" },
   ],
   socials: [
-    { label: "LinkedIn", href: "https://linkedin.com/in/placeholder", placeholder: true },
-    { label: "GitHub", href: "https://github.com/placeholder", placeholder: true },
-    { label: "Behance", href: "https://behance.net/placeholder", placeholder: true },
-    { label: "E-mail", href: "mailto:contato@placeholder.com", placeholder: true },
-    { label: "WhatsApp", href: "https://wa.me/5500000000000", placeholder: true },
-    { label: "Currículo PDF", href: "/curriculo-placeholder.pdf", placeholder: true },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/matheus-gaston-da-silva-048005281" },
+    { label: "GitHub", href: "https://github.com/GSWGaston" },
+    { label: "Behance", href: "https://www.behance.net/matheusgaston" },
+    { label: "E-mail", href: "mailto:matheus.gaston.silva@gmail.com" },
+    { label: "Currículo PDF", href: "/curriculo-matheus-gaston.pdf" },
   ],
 } as const;
 

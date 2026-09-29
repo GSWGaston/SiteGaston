@@ -15,7 +15,6 @@ export function ContactSection() {
           {siteConfig.socials.map((social) => (
             <Link href={social.href} key={social.label} target={social.href.startsWith("http") ? "_blank" : undefined} rel={social.href.startsWith("http") ? "noreferrer" : undefined}>
               <span>{social.label}</span>
-              <span className="placeholder-label">{social.placeholder ? "link placeholder" : ""}</span>
               <ArrowUpRight />
             </Link>
           ))}

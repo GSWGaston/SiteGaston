@@ -31,7 +31,6 @@ export function ProjectForm({ project, action }: ProjectFormProps) {
       <div className="admin-field admin-field-wide"><label htmlFor="description">Descrição</label><textarea id="description" name="description" defaultValue={project?.description} rows={5} /></div>
       <div className="admin-field"><label htmlFor="year">Ano</label><input id="year" name="year" defaultValue={project?.year} /></div>
       <div className="admin-field"><label htmlFor="status">Fase do projeto</label><select id="status" name="status" defaultValue={project?.status ?? ""}><option value="">Não informado</option><option>Em desenvolvimento</option><option>Conceito</option><option>Acadêmico</option><option>Concluído</option></select></div>
-      <div className="admin-field"><label htmlFor="sortOrder">Ordem</label><input id="sortOrder" name="sortOrder" min="0" type="number" defaultValue={project?.sortOrder ?? 0} /></div>
       <div className="admin-field"><label htmlFor="accent">Cor do projeto</label><input id="accent" name="accent" type="color" defaultValue={project?.accent ?? "#d8ff4f"} /></div>
     </div></section>
 
@@ -41,7 +40,7 @@ export function ProjectForm({ project, action }: ProjectFormProps) {
 
     <ProjectBlockEditor initialBlocks={project?.blocks ?? []} />
 
-    <section className="admin-form-section"><div className="admin-form-heading"><div><span>05</span><h2>Publicação</h2></div><p>Controle a visibilidade e o destaque do projeto.</p></div><div className="admin-form-grid"><div className="admin-field"><label htmlFor="publicationStatus">Visibilidade</label><select id="publicationStatus" name="publicationStatus" defaultValue={publicationStatus}><option value="draft">Rascunho</option><option value="published">Publicado</option><option value="hidden">Oculto</option></select></div><div className="admin-toggle-stack"><label><input defaultChecked={project?.featured} name="featured" type="checkbox" /> Projeto em destaque na Home</label></div></div></section>
+    <section className="admin-form-section"><div className="admin-form-heading"><div><span>05</span><h2>Publicação</h2></div><p>Controle a visibilidade do projeto. A ordem e o destaque são definidos na lista de projetos.</p></div><div className="admin-form-grid"><div className="admin-field"><label htmlFor="publicationStatus">Visibilidade</label><select id="publicationStatus" name="publicationStatus" defaultValue={publicationStatus}><option value="draft">Rascunho</option><option value="published">Publicado</option><option value="hidden">Oculto</option></select></div></div></section>
 
     <section className="admin-publish-bar"><p>{publicationStatus === "published" ? "Este projeto está publicado." : "Salve para aplicar as alterações."}</p>{state.error ? <p className="admin-error" role="alert">{state.error}</p> : null}<SubmitButton /></section>
   </form>;

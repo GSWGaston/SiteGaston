@@ -253,14 +253,22 @@ button { color: inherit; font: inherit; }
 .admin-setup-panel h2 { margin: 1rem 0; font-size: clamp(1.7rem, 4vw, 3rem); letter-spacing: -.05em; }
 .admin-setup-panel p { max-width: 40rem; color: #aaa; }
 .admin-setup-panel code { display: inline-block; margin-top: 1rem; padding: .6rem .8rem; border-radius: .4rem; background: #25272a; color: var(--accent); }
-.admin-project-list { border-top: 1px solid #d7d7d0; }
-.admin-project-list article { display: grid; grid-template-columns: 3.25rem 1fr auto; gap: 1rem; align-items: center; padding-block: 1rem; border-bottom: 1px solid #d7d7d0; }
+.admin-sort-instructions { display: flex; min-height: 2.5rem; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; color: #74766f; font-size: .72rem; }
+.admin-sort-instructions p { margin: 0; }
+.admin-sort-instructions span { color: #526500; }
+.admin-project-list { border-top: 1px solid #d7d7d0; transition: opacity .2s ease; }
+.admin-project-list.is-saving { opacity: .72; pointer-events: none; }
+.admin-project-list article { display: grid; grid-template-columns: 1rem 3.25rem 1fr auto; gap: 1rem; align-items: center; padding-block: 1rem; border-bottom: 1px solid #d7d7d0; transition: background-color .15s ease, opacity .15s ease, transform .15s ease; }
+.admin-project-list article[draggable="true"] { cursor: grab; }
+.admin-project-list article[draggable="true"]:active { cursor: grabbing; }
+.admin-project-list article.is-dragging { background: #ecece5; opacity: .55; transform: scale(.995); }
+.admin-drag-handle { color: #858780; font-size: 1.2rem; line-height: 1; user-select: none; }
 .admin-project-swatch { display: grid; width: 3.25rem; height: 3.25rem; place-items: center; border-radius: .7rem; color: #111214; font-size: .65rem; font-weight: 800; }
 .admin-project-info h2 { margin: 0; font-size: 1.1rem; letter-spacing: -.025em; }
 .admin-project-info p { margin: .25rem 0 0; color: #777973; font-size: .64rem; text-transform: uppercase; }
 .admin-status { padding: .35rem .55rem; border-radius: 999px; background: #e2e2db; color: #6e706a; font-size: .59rem; text-transform: uppercase; }
 .admin-status.published { background: #dff1c2; color: #3f6000; }
-.admin-project-actions { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; font-size: .68rem; }
+.admin-project-actions { grid-column: 3 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .8rem; font-size: .68rem; }
 .admin-project-actions > a { text-decoration: underline; text-underline-offset: .25rem; }
 .admin-project-actions .admin-danger-button { min-height: 2rem; padding: .35rem .7rem; }
 .admin-form-section { margin-top: 1.25rem; padding: clamp(1.25rem, 3vw, 2.25rem); border: 1px solid #d7d7d0; border-radius: 1rem; background: #fafaf7; }
@@ -337,7 +345,7 @@ button { color: inherit; font: inherit; }
   .skill-groups article:nth-child(even) { padding-left: 2rem; }
   .tools-grid { gap: 3rem 1rem; }
   .admin-header nav > span { display: inline; }
-  .admin-project-list article { grid-template-columns: 3.25rem minmax(12rem, 1fr) auto auto; }
+  .admin-project-list article { grid-template-columns: 1rem 3.25rem minmax(12rem, 1fr) auto auto; }
   .admin-project-actions { grid-column: auto; justify-content: flex-end; }
   .admin-form-heading { grid-template-columns: 1fr 1fr; }
   .admin-form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

@@ -116,6 +116,26 @@ export async function updateProjectStatus(id: string, publicationStatus: Project
   await getSql()`UPDATE projects SET publication_status = ${publicationStatus}, published = ${publicationStatus === "published"}, updated_at = NOW() WHERE id = ${id}`;
 }
 
+export async function reorderProjects(projectIds: string[]) {
+  if (projectIds.length === 0) return;
+  const sql = getSql();
+  await sql`
+    WITH ordered_projects AS (
+      SELECT id, ordinality - 1 AS sort_order
+      FROM jsonb_array_elements_text(${JSON.stringify(projectIds)}::jsonb) WITH ORDINALITY AS item(id, ordinality)
+    )
+    UPDATE projects AS project
+    SET sort_order = ordered.sort_order,
+        featured = ordered.sort_order = 0
+    FROM ordered_projects AS ordered
+    WHERE project.id = ordered.id`;
+}
+
+export async function normalizeProjectOrder() {
+  const rows = await getSql()`SELECT id FROM projects ORDER BY sort_order ASC, updated_at DESC`;
+  await reorderProjects((rows as unknown as Array<{ id: string }>).map((row) => row.id));
+}
+
 export async function deleteProject(id: string) {
   await getSql()`DELETE FROM projects WHERE id = ${id}`;
 }
