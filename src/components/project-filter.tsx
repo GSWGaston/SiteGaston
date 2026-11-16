@@ -14,7 +14,7 @@ export function ProjectFilter({ projects }: { projects: Project[] }) {
   return (
     <>
       <div className="filter-list" role="group" aria-label="Filtrar projetos por categoria">
-        {projectCategories.map((category) => (
+        {projectCategories.filter((category) => category === "Todos" || projects.some((project) => project.categories.includes(category))).map((category) => (
           <button
             aria-pressed={activeCategory === category}
             className={activeCategory === category ? "filter-button is-active" : "filter-button"}

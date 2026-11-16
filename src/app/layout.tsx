@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Gaston Design — Design, tecnologia e produto",
+    title: "Gaston Design — UI/UX, Web e Branding",
     description: siteConfig.description,
     type: "website",
     locale: "pt_BR",

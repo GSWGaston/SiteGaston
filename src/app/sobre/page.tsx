@@ -4,7 +4,7 @@ import { skillGroups, softSkills, toolGroups } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Sobre",
-  description: "Conheça a trajetória, experiência e competências de Matheus Gaston.",
+  description: "Conheça a trajetória, experiência e competências de Matheus Gaston, designer de UI/UX, web e branding.",
   alternates: { canonical: "/sobre" },
 };
 
@@ -15,8 +15,8 @@ export default function AboutPage() {
         <p className="eyebrow">Sobre / Perfil</p>
         <h1>Olhar criativo.<br /><span>Base técnica.</span></h1>
         <div className="about-intro">
-          <p>Sou Matheus Gaston, designer multidisciplinar, estudante de Produção Multimídia no Senac RS e profissional de tecnologia em Porto Alegre.</p>
-          <p>Minha prática acontece onde design, produto, desenvolvimento e multimídia se encontram. Gosto de transformar problemas em soluções claras — pensando a experiência e também entendendo o que existe por trás dela.</p>
+          <p>Sou Matheus Gaston, designer de UI/UX, web e branding, estudante de Produção Multimídia no Senac RS e profissional de tecnologia em Porto Alegre.</p>
+          <p>Minha prática acontece onde design, produto e desenvolvimento web se encontram. Gosto de transformar problemas em soluções claras — pensando a experiência e também entendendo o que existe por trás dela.</p>
         </div>
       </header>
 
@@ -25,7 +25,7 @@ export default function AboutPage() {
         <div className="trajectory-grid">
           <p className="large-copy">A curiosidade por como as coisas funcionam sempre guiou meu caminho.</p>
           <div>
-            <p>Minha experiência em suporte técnico e infraestrutura construiu uma base prática de diagnóstico, autonomia e resolução de problemas. A Produção Multimídia ampliou esse repertório para interfaces, identidades, audiovisual e experiências digitais.</p>
+            <p>Minha experiência em suporte técnico e infraestrutura construiu uma base prática de diagnóstico, autonomia e resolução de problemas. A Produção Multimídia ampliou esse repertório para interfaces, identidades visuais e experiências digitais.</p>
             <p>Hoje, levo a mesma disposição de investigar sistemas para o processo criativo: entender contexto, organizar informação, prototipar e materializar soluções.</p>
           </div>
         </div>

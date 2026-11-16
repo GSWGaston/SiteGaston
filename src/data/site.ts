@@ -2,10 +2,10 @@ export const siteConfig = {
   name: "Gaston Design",
   fullName: "Matheus Gaston da Silva",
   location: "Porto Alegre, RS — Brasil",
-  role: "Designer multidisciplinar e profissional de tecnologia",
+  role: "Designer de UI/UX, web e branding",
   description:
-    "Portfólio Gaston Design: produtos digitais, interfaces, identidades visuais, desenvolvimento web e produção multimídia.",
-  url: "https://placeholder.example",
+    "Matheus Gaston, designer de UI/UX, web e branding em Porto Alegre: interfaces, sites e identidades visuais para pequenos negócios, profissionais autônomos, estúdios e agências.",
+  url: "https://mgsgaston.vercel.app",
   email: "matheus.gaston.silva@gmail.com",
   navigation: [
     { label: "Início", href: "/" },
@@ -38,11 +38,6 @@ export const practiceAreas = [
     title: "Web & Desenvolvimento",
     description: "Landing pages, aplicações web, experimentos e soluções digitais funcionais.",
   },
-  {
-    number: "04",
-    title: "Multimídia",
-    description: "Vídeo, motion design, edição, áudio, animação e projetos audiovisuais.",
-  },
 ] as const;
 
 export const skillGroups = [
@@ -53,10 +48,6 @@ export const skillGroups = [
   {
     title: "Desenvolvimento",
     items: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS", "Python", "FastAPI", "Node.js", "Express", "C#", "SQLite"],
-  },
-  {
-    title: "Multimídia",
-    items: ["Motion Design", "Audiovisual", "Edição", "Animação", "Áudio", "3D"],
   },
   {
     title: "Tecnologia",

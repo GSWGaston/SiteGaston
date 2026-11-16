@@ -9,7 +9,7 @@ export function ContactSection() {
         <p className="eyebrow">Contato / 05</p>
         <div className="contact-heading">
           <h2>Tem uma ideia?<br /><span>Vamos tirá-la do papel.</span></h2>
-          <p>Estou aberto a oportunidades, colaborações e projetos que aproximem design, tecnologia e boas experiências.</p>
+          <p>Estou aberto a projetos de sites, interfaces e identidades visuais, e a parcerias com estúdios e agências. Também publico o site no domínio do cliente, caso você já tenha um.</p>
         </div>
         <div className="contact-links">
           {siteConfig.socials.map((social) => (
