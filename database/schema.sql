@@ -29,6 +29,10 @@ CREATE TABLE IF NOT EXISTS projects (
 
 ALTER TABLE projects ADD COLUMN IF NOT EXISTS publication_status TEXT NOT NULL DEFAULT 'draft';
 ALTER TABLE projects ADD COLUMN IF NOT EXISTS blocks JSONB NOT NULL DEFAULT '[]'::jsonb;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS project_type TEXT;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS brand_relation TEXT;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS reference_brand TEXT;
+ALTER TABLE projects ADD COLUMN IF NOT EXISTS course TEXT;
 
 UPDATE projects SET publication_status = CASE WHEN published THEN 'published' ELSE 'draft' END
 WHERE publication_status = 'draft' AND published = true;

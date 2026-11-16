@@ -7,6 +7,8 @@ import type { Project, ProjectBlock, ProjectPublicationStatus } from "@/types/pr
 
 type ProjectRow = {
   id: string; slug: string; title: string; subtitle: string; short_description: string; description: string;
+  project_type?: Project["projectType"] | null; brand_relation?: Project["brandRelation"] | null;
+  reference_brand?: string | null; course?: string | null;
   year: string | null; status: Project["status"] | null; publication_status: ProjectPublicationStatus | null;
   categories: Project["categories"]; disciplines: string[]; technologies: string[]; thumbnail: string | null;
   cover: string | null; gallery: string[]; featured: boolean; published: boolean; accent: string;
@@ -37,7 +39,9 @@ function rowToProject(row: ProjectRow): Project {
   return normalizeProject({
     id: row.id, slug: row.slug, title: row.title, subtitle: row.subtitle, shortDescription: row.short_description,
     description: row.description, year: row.year ?? undefined, status: row.status ?? undefined,
-    publicationStatus: row.publication_status ?? (row.published ? "published" : "draft"), categories: row.categories ?? [],
+    publicationStatus: row.publication_status ?? (row.published ? "published" : "draft"),
+    projectType: row.project_type ?? undefined, brandRelation: row.brand_relation ?? undefined,
+    referenceBrand: row.reference_brand ?? undefined, course: row.course ?? undefined, categories: row.categories ?? [],
     disciplines: row.disciplines ?? [], technologies: row.technologies ?? [], thumbnail: row.thumbnail ?? undefined,
     cover: row.cover ?? undefined, gallery: row.gallery ?? [], featured: row.featured, published: row.published,
     accent: row.accent, index: row.project_index, sortOrder: row.sort_order, links: row.links ?? [], blocks: row.blocks ?? [],
@@ -79,6 +83,18 @@ export async function isSlugAvailable(slug: string, exceptId?: string) {
   return (rows as unknown as Array<{ id: string }>).length === 0;
 }
 
+// Colunas novas ficam num UPDATE à parte: antes da migração, salvar sem esses campos continua funcionando.
+async function saveClassification(id: string, input: ProjectInput) {
+  const values = [input.projectType, input.brandRelation, input.referenceBrand, input.course];
+  try {
+    await getSql()`UPDATE projects SET project_type = ${input.projectType ?? null}, brand_relation = ${input.brandRelation ?? null},
+      reference_brand = ${input.referenceBrand ?? null}, course = ${input.course ?? null} WHERE id = ${id}`;
+  } catch (error) {
+    const missingColumn = (error as { code?: string }).code === "42703";
+    if (!(missingColumn && values.every((value) => !value))) throw error;
+  }
+}
+
 export async function createProject(input: ProjectInput) {
   const sql = getSql();
   const id = input.id ?? crypto.randomUUID();
@@ -93,6 +109,7 @@ export async function createProject(input: ProjectInput) {
       ${input.cover ?? null}, ${JSON.stringify(input.gallery)}, ${input.featured}, ${publicationStatus === "published"},
       ${input.accent}, ${input.index}, ${input.sortOrder ?? 0}, ${JSON.stringify(input.links)},
       ${JSON.stringify(input.blocks ?? [])}, ${JSON.stringify(input.sections ?? [])})`;
+  await saveClassification(id, input);
   if (input.featured) await sql`UPDATE projects SET featured = false WHERE id <> ${id} AND featured = true`;
   return id;
 }
@@ -109,6 +126,7 @@ export async function updateProject(id: string, input: ProjectInput) {
     project_index = ${input.index}, sort_order = ${input.sortOrder ?? 0}, links = ${JSON.stringify(input.links)},
     blocks = ${JSON.stringify(input.blocks ?? [])}, sections = ${JSON.stringify(input.sections ?? [])}, updated_at = NOW()
     WHERE id = ${id}`;
+  await saveClassification(id, input);
   if (input.featured) await sql`UPDATE projects SET featured = false WHERE id <> ${id} AND featured = true`;
 }
 

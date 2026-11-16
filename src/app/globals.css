@@ -166,7 +166,9 @@ button { color: inherit; font: inherit; }
 .back-link:hover { color: var(--text); }
 .case-title-row { display: grid; gap: 2rem; align-items: end; padding-block: clamp(3rem, 7vw, 7rem); }
 .case-title-row h1 { margin: 1.25rem 0 .75rem; font-size: clamp(4rem, 13vw, 11rem); font-weight: 600; letter-spacing: -.09em; line-height: .82; }
-.case-title-row > div > p:last-child { margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.5rem); }
+.case-title-row .case-subtitle { margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.5rem); }
+.case-title-row .case-description { max-width: 46rem; margin: 1.5rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.6; }
+.project-badges { margin-top: 1rem; }
 .case-index { color: var(--line); font-size: clamp(4rem, 12vw, 10rem); font-weight: 600; letter-spacing: -.07em; line-height: .8; }
 .project-visual-hero { min-height: clamp(28rem, 65vw, 52rem); }
 .project-visual-hero .visual-monogram { font-size: clamp(8rem, 28vw, 25rem); }
@@ -332,7 +334,7 @@ button { color: inherit; font: inherit; }
   .footer-inner { grid-template-columns: 1fr auto 1fr; align-items: center; }
   .footer-inner > p:last-child { text-align: right; }
   .case-title-row { grid-template-columns: 1fr auto; }
-  .case-meta { grid-template-columns: .7fr 1.6fr .7fr; }
+  .case-meta { grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); }
   .case-meta > div { display: block; }
   .case-meta dd { margin-top: .6rem; }
   .case-text { grid-template-columns: minmax(14rem, .7fr) 1.3fr; }

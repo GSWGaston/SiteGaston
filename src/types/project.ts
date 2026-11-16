@@ -72,6 +72,8 @@ export type TwoViewProjectBlock = ProjectBlockBase & {
 };
 
 export type ProjectBlock = TextProjectBlock | ImageProjectBlock | GalleryProjectBlock | VideoProjectBlock | LiveDemoProjectBlock | TwoViewProjectBlock;
+export type ProjectKind = "autoral" | "academico" | "cliente";
+export type BrandRelation = "sem-vinculo" | "com-vinculo" | "nao-se-aplica";
 export type ProjectPublicationStatus = "draft" | "published" | "hidden";
 
 export type Project = {
@@ -84,6 +86,10 @@ export type Project = {
   year?: string;
   status?: "Em desenvolvimento" | "Conceito" | "Acadêmico" | "Concluído";
   publicationStatus?: ProjectPublicationStatus;
+  projectType?: ProjectKind;
+  brandRelation?: BrandRelation;
+  referenceBrand?: string;
+  course?: string;
   categories: ProjectCategory[];
   disciplines: string[];
   technologies: string[];

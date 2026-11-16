@@ -5,14 +5,12 @@ import { ArrowRight } from "@/components/icons";
 import { CaseContent } from "@/components/case-content";
 import { ProjectBlocks } from "@/components/project-blocks/project-block-renderer";
 import { ProjectVisual } from "@/components/project-visual";
-import { projects as seedProjects } from "@/data/projects";
+import { brandRelationOptions, classificationBadges, projectKindOptions } from "@/data/classification";
 import { getProjectBySlug, getPublicProjects } from "@/lib/projects";
 
 type ProjectPageProps = { params: Promise<{ slug: string }> };
 
-export function generateStaticParams() {
-  return seedProjects.map((project) => ({ slug: project.slug }));
-}
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -32,6 +30,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) notFound();
   const currentIndex = projects.findIndex((item) => item.slug === slug);
   const nextProject = projects[(currentIndex + 1) % projects.length];
+  const badges = classificationBadges(project);
+  const kindLabel = projectKindOptions.find((option) => option.value === project.projectType)?.label;
+  const relationLabel = brandRelationOptions.find((option) => option.value === project.brandRelation)?.label;
+  const meta: Array<[string, string | undefined]> = [
+    ["Tipo", kindLabel],
+    ["Vínculo", relationLabel ? [relationLabel, project.referenceBrand].filter(Boolean).join(" · ") : undefined],
+    ["Disciplina", project.course],
+    ["Status", project.status],
+    ["Ano", project.year],
+    ["Habilidades", project.disciplines.join(", ") || undefined],
+  ];
   const projectSchema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -48,15 +57,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <div>
             <p className="eyebrow">{project.categories.join(" / ")}</p>
             <h1>{project.title}</h1>
-            <p>{project.subtitle}</p>
+            <p className="case-subtitle">{project.subtitle}</p>
+            {badges.length ? <ul className="tag-list project-badges" aria-label="Classificação do projeto">{badges.map((badge) => <li key={badge}>{badge}</li>)}</ul> : null}
+            {project.description ? <p className="case-description">{project.description}</p> : null}
           </div>
-          <span className="case-index">{project.index}</span>
+          <span className="case-index" aria-hidden="true">{String(currentIndex + 1).padStart(2, "0")}</span>
         </div>
         <ProjectVisual project={project} variant="hero" />
         <dl className="case-meta">
-          <div><dt>Status</dt><dd>{project.status ?? "Não informado"}</dd></div>
-          <div><dt>Disciplinas</dt><dd>{project.disciplines.join(", ")}</dd></div>
-          <div><dt>Ano</dt><dd>{project.year ?? "Não informado"}</dd></div>
+          {meta.map(([label, value]) => value ? <div key={label}><dt>{label}</dt><dd>{value}</dd></div> : null)}
         </dl>
       </header>
       {project.blocks?.length ? <ProjectBlocks blocks={project.blocks} /> : <CaseContent project={project} />}
