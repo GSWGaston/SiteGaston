@@ -14,7 +14,7 @@ Open `http://localhost:3000`.
 
 ## Local Behavior
 
-The public site works without external services. When `.env.local` has no `DATABASE_URL`, project data is loaded from `src/data/projects.ts`.
+The public site works without external services. When `.env.local` has no `DATABASE_URL`, project data is loaded from `src/data/projects.ts` (a reference copy of the published projects).
 
 The admin login page is reachable at `/admin/login`, but real login requires Vercel OAuth variables. The admin index at `/admin` requires a valid session. Public pages continue using seed data when Neon is absent; write operations stay disabled.
 
@@ -35,7 +35,7 @@ The admin login page is reachable at `/admin/login`, but real login requires Ver
 5. Mark the project hidden and verify the public route returns 404.
 6. Duplicate the project and confirm the copy is a non-featured draft with a unique slug.
 
-`npm run db:setup` is also the migration command for existing databases. It adds `publication_status` and `blocks` without deleting legacy `sections` or current projects.
+`npm run db:setup` is also the migration command for existing databases. It adds `publication_status`, `blocks`, `project_type`, `brand_relation`, `reference_brand` and `course` without touching legacy `sections` or any project row. It never seeds projects.
 
 ## GitHub Update Checklist
 

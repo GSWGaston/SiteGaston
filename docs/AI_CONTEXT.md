@@ -15,7 +15,8 @@ Personal portfolio for Matheus Gaston built with Next.js App Router, TypeScript,
 - Admin auth uses Sign in with Vercel, OAuth cookies and a signed session cookie in `src/lib/auth.ts`. Every mutation and upload validates the session on the server.
 - Project visibility is `draft`, `published` or `hidden`. Only `published` records reach public queries; Home also requires `featured`.
 - New case content lives in `projects.blocks` (JSONB). Existing `sections` remain as a read-only public fallback while old cases are migrated naturally.
-- Site copy, links, skills and contact placeholders live in `src/data/site.ts`.
+- Site copy, URL, contact links, skills and tools live in `src/data/site.ts`.
+- Each project can be classified (`projectType`, `brandRelation`, `referenceBrand`, `course`); options and public badge text live in `src/data/classification.ts`. These columns are optional and are saved in a separate UPDATE so the app keeps working before the migration.
 
 ## Important Files
 
@@ -63,7 +64,7 @@ After configuring Neon:
 npm run db:setup
 ```
 
-The setup script applies additive schema changes and seeds only missing projects. It does not delete current records.
+The setup script only applies additive schema changes (including `project_type`, `brand_relation`, `reference_brand`, `course`). It does not create, recreate or delete projects. `src/data/projects.ts` is only the local fallback when `DATABASE_URL` is absent.
 
 ## Block Model
 
@@ -83,6 +84,6 @@ This repo has an `AGENTS.md` warning: read local Next docs from `node_modules/ne
 
 Dynamic route params and `searchParams` are typed as promises in this Next version.
 
-## Known Content Placeholders
+## Content Notes
 
-`src/data/site.ts` still contains placeholder URL, email and social links. Project images are intentionally placeholder text until real media is added.
+`src/data/site.ts` holds the real site URL, e-mail and social links. Projects without a cover image render a provisional visual. The personal phone number must not appear anywhere in the site, code, docs or the résumé PDF.
