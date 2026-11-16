@@ -165,7 +165,7 @@ button { color: inherit; font: inherit; }
 .back-link { display: inline-block; color: var(--muted); font-size: .75rem; transition: color .2s; }
 .back-link:hover { color: var(--text); }
 .case-title-row { display: grid; gap: 2rem; align-items: end; padding-block: clamp(3rem, 7vw, 7rem); }
-.case-title-row h1 { margin: 1.25rem 0 .75rem; font-size: clamp(4rem, 13vw, 11rem); font-weight: 600; letter-spacing: -.09em; line-height: .82; }
+.case-title-row h1 { margin: 1.25rem 0 .75rem; font-size: clamp(2.5rem, 13vw, 11rem); font-weight: 600; letter-spacing: -.09em; line-height: .88; overflow-wrap: anywhere; }
 .case-title-row .case-subtitle { margin: 0; color: var(--muted); font-size: clamp(1rem, 2vw, 1.5rem); }
 .case-title-row .case-description { max-width: 46rem; margin: 1.5rem 0 0; color: var(--muted); font-size: 1rem; line-height: 1.6; }
 .project-badges { margin-top: 1rem; }
